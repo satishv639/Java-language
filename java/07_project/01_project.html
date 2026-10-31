@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+body {
+    background-color: #212121;
+    color: #fff;
+}
+.button {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    border: 1px solid #eee;
+}
+
+#grey {
+    background-color: grey;
+}
+
+#white {
+    background-color: #fff;
+}
+
+#blue {
+    background-color: blue;
+}
+
+#yellow {
+    background-color: yellow;
+}
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <h1>Color Scheme Switcher</h1>
+        <div class="button-group">
+            <span class="button" id="grey"></span>
+            <span class="button" id="white"></span>
+            <span class="button" id="blue"></span>
+            <span class="button" id="yellow"></span>
+        </div>
+
+        <h2>Try clicking on one of the color above
+            <span>to change the background color of this page</span>
+        </h2>
+    </div>
+</body>
+<script>
+    const buttons = document.querySelectorAll(".button");
+    const body = document.querySelector("body");
+    buttons.forEach(function (button) {
+        button.addEventListener("click", function(e){
+            if (e.target.id === "grey") {
+                body.style.backgroundColor = "grey"
+            }else if (e.target.id === "white") {
+                body.style.backgroundColor = "white"
+            }else if (e.target.id === "blue") {
+                body.style.backgroundColor = "blue"
+            }else if (e.target.id === "yellow") {
+                body.style.backgroundColor = "yellow"
+            }
+        })
+    });
+</script>
+</html>

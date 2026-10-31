@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unlimited color BG</title>
+</head>
+<body>
+    <h1>Start should change the background color every second</h1>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+</body>
+<script>
+// genrate a random color
+
+const randomColor = function(){
+    const hex  = "0123456789ABCDEF"
+    let color = "#"
+
+    for (let i = 0; i < 6; i++) {
+        color += hex[Math.floor(Math.random() * 16)]    
+    }
+    return color
+}
+let inervalId;
+const startChangingColor = function(){
+    if (!inervalId) {
+        inervalId = setInterval(chanageBgColor, 1000);
+    }
+    function chanageBgColor(){
+         document.body.style.backgroundColor = randomColor()
+    }
+    
+};
+const stopChangingColor = function(){
+    clearInterval(inervalId);
+    inervalId = null;
+}
+document.getElementById("start").addEventListener("click", startChangingColor)
+document.getElementById("stop").addEventListener("click", stopChangingColor)
+</script>
+</html>

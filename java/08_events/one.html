@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <style>
+body {
+    background-color: #212121;
+    color: #fff;
+    font-family: arial;
+}
+* {
+    box-sizing: border-box;
+}
+.images li img {
+    width: 100%;
+}
+
+#images {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    flex-wrap: wrap;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    list-style: none;
+}
+#images li img {
+    width: 100%;
+    display: block;
+}
+    </style>
+</head>
+<body>
+    <h2>Amazing image</h2>
+    <ul id="images">
+        <li><img id="photoshop" src="https://images.pexels.com/photos/38885528/pexels-photo-38885528.jpeg?_gl=1*1sddens*_ga*MTI5MDQ5OTIwMS4xNzkzMzU1Nzg3*_ga_8JE65Q40S6*czE3OTMzNTU3ODckbzEkZzEkdDE3OTMzNTU4MTQkajMzJGwwJGgw" alt="photoshop"></li>
+        <li><img id="japan" src="https://images.pexels.com/photos/14754043/pexels-photo-14754043.jpeg?_gl=1*xjk6h2*_ga*MTI5MDQ5OTIwMS4xNzkzMzU1Nzg3*_ga_8JE65Q40S6*czE3OTMzNTU3ODckbzEkZzEkdDE3OTMzNTU4NDAkajckbDAkaDA." alt=""></li>
+        <li><img id="river" src="https://images.pexels.com/photos/968639/pexels-photo-968639.jpeg?_gl=1*44dzj3*_ga*MTI5MDQ5OTIwMS4xNzkzMzU1Nzg3*_ga_8JE65Q40S6*czE3OTMzNTU3ODckbzEkZzEkdDE3OTMzNTU5NjgkajU5JGwwJGgw" alt=""></li>
+        <li><img id="owl" src="https://images.pexels.com/photos/892757/pexels-photo-892757.jpeg?_gl=1*10hh37f*_ga*MTI5MDQ5OTIwMS4xNzkzMzU1Nzg3*_ga_8JE65Q40S6*czE3OTMzNTU3ODckbzEkZzEkdDE3OTMzNTU5ODYkajQxJGwwJGgw" alt=""></li>
+        <li><img id="prayer" src="https://images.pexels.com/photos/3850212/pexels-photo-3850212.jpeg?_gl=1*jyuy2o*_ga*MTI5MDQ5OTIwMS4xNzkzMzU1Nzg3*_ga_8JE65Q40S6*czE3OTMzNTU3ODckbzEkZzEkdDE3OTMzNTYwNTUkajUzJGwwJGgw" alt=""></li>
+        <li><a href="https://www.google.com/" id="google">Google</a></li>
+    </ul>
+</body>
+<script>
+    // document.getElementById("owl").onclick = function(){
+    //     alert("owl click");
+    // }
+
+    // attachEvent()
+    // jQuery
+
+    // document.getElementById("owl").addEventListener("click", function(e){
+    //     console.log(e);
+    //     // alert("target owl");
+    // }, false)
+
+    // type, timestamp, defaultPrevented, target, toElement, srcElement, currentTarget
+    // clientX, clientY, screenX, screenY, altkey, ctrlkey, shiftkey, keyCode
+
+    // event propagation
+    // document.getElementById("images").addEventListener("click", function(e){
+    //     console.log("Clicked inside the ul");
+    // }, false)
+
+    // document.getElementById("owl").addEventListener("click", function(e){
+    //     console.log("Clicked owl");
+    //     e.stopPropagation();
+    // }, false)
+
+    // document.getElementById("google").addEventListener("click", function(e){
+    //     e.preventDefault();
+    //     e.stopPropagation();
+    //     console.log("google clicked");
+    // })
+
+    document.querySelector("#images").addEventListener("click", function(e){
+        //console.log(e.target);
+        console.log(e.target.tagName)
+        if (e.target.tagName === "IMG") {
+            
+            console.log(e.target.id)
+            let removeIt = e.target.parentNode
+            removeIt.remove();
+        }
+        
+        // removeIt.parentNode.removeChild(removeIt);
+    })
+
+    
+</script>
+</html>
