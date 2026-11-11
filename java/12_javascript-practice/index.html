@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management Systemv</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wraper">
+    <div class="container">
+        <div class="product-box">
+            <h2>Product Management System</h2>
+            <form action="" id="product-form">
+                <div class="row-flex">
+                    <div class="form-group">
+                        <input type="text" id="product-name" placeholder="Product Name" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" id="product-price" placeholder="Price (₹)" required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="product-category" placeholder="Category" required>
+                    </div>
+                </div>
+                <div class="row-flex">
+                    <div class="form-btn">
+                        <button type="submit" id="submit-btn">Add Product</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        
+
+        <!-- Product List / Display Section -->
+        <div class="product-display">
+            <h2>Product List</h2>
+            <!-- Search Input Section -->
+            <div class="search-section" style="margin: 20px 0;">
+                <input type="text" id="search-input" placeholder="Search product by name..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px;">
+                <!-- Category Filter Dropdown -->
+                <select id="category-filter" style="flex: 1; margin-top: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; background-color: #fff;">
+                    <option value="All">All Categories</option>
+                </select>
+            </div>
+            <table id="product-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="product-list">
+                    <!-- Products yahan JavaScript se dynamically aayenge -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>    
+</body>
+<script src="script.js"></script>
+</html>
