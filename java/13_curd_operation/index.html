@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css"/>
+    <title>CURD Operation in javascript</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="user-box">
+                <h2>JAVASCRIPT CRUD OPERATION</h2>
+                <form action="" id="user-form">
+                    <div class="form-row">
+                        <div class="half-div">
+                            <div class="form-group">
+                                <label for="">User name</label>
+                                <input type="text" placeholder="Enter Name" id="user-name" required/>
+                            </div>
+                        </div>
+                        <div class="half-div">
+                            <div class="form-group">
+                                <label for="">Email</label>
+                                <input type="email" placeholder="Enter Email" id="user-email" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="half-div">
+                            <div class="form-group">
+                                <label for="">Mobile No.</label>
+                                <input type="number" placeholder="Enter mobile" id="user-mobile" required/>
+                            </div>
+                        </div>
+                        <div class="half-div">
+                            <div class="form-group">
+                                <label for="">D.O.B</label>
+                                <input type="date" placeholder="Enter DOB" id="user-date" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="full-div">
+                            <div class="form-group">
+                                <label for="">Upload Image</label>
+                                <input type="file" placeholder="Upload image" id="user-profile"/>
+                            </div>
+                        </div>
+                        <div class="full-div">
+                            <div class="form-group">
+                                <button type="submit" id="submit-btn">Submit</button>
+                                <button type="submit" id="update-btn" disabled>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="user-table-box">
+                <div class="user-tb-head">
+                    <h3>User Data</h3>
+                    <div class="search-filter">
+                        <input type="text" placeholder="Search here..." id="user-search"/>
+                    </div>
+                </div>
+                <div class="user-tb-body">
+                    <table id="user-table">
+                        <thead>
+                            <tr>
+                                <th>Sr</th>
+                                <th>Profile</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+                                <th>D.O.B</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-list">
+                            <!-- Products yahan JavaScript se dynamically aayenge -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

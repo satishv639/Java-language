@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #000000;
+    color: #fff;
+    padding: 20px;
+}
+.wraper {
+    padding: 30px 0;
+}
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.user-box {
+    padding: 30px;
+    background-color: #121212;
+    border-radius: 12px;
+}
+.user-box h2 {
+    text-align: center;
+    font-size: 36px;
+    margin: 0 0 20px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.half-div {
+    width: 50%;
+    padding: 0 10px;
+    margin: 0 0 15px;
+}
+
+.full-div {
+    width: 100%;
+    padding: 0 10px;
+    margin: 0 0 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    margin: 0 0 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #ffffff24;
+    color: #fff;
+    box-shadow: none;
+    outline: none;
+}
+.form-group input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #fff;
+}
+.form-group input::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+}
+.form-group input:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
+}
+.form-group input:-moz-placeholder { /* Firefox 18- */
+  color: #fff;
+}
+button {
+    padding: 12px 40px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+#update-btn {
+    background-color: orange;
+}
+.user-table-box {
+    margin-top: 30px;
+}
+.user-tb-head {
+    background-color: #104b74;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-tb-head h3 {
+    font-size: 24px;
+}
+
+.search-filter input {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    box-shadow: none;
+    outline: none;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #262626;
+}
+
+th, td {
+    padding: 10px 20px;
+    line-height: normal;
+    border: 1px solid #262626;
+    text-align: left;
+    font-size: 14px;
+}
+.user-tb-body {
+    padding: 20px;
+    background-color: #121212;
+}
+
+th {background-color: #000;}
+.btn {
+    padding: 3px 8px;
+    margin: 0 2px;
+    border-radius: 5px;
+}
+.delete-btn {
+    background-color: red;
+    color: #fff;
+}
