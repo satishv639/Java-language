@@ -141,3 +141,36 @@ th {background-color: #000;}
     background-color: red;
     color: #fff;
 }
+#delete-all-btn {
+    background-color: red;
+    color: white;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+.pagination {
+    display: flex;
+    gap: 3px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.pagination button {
+    padding: 5px 8px;
+    font-size: 14px;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    background-color: rgb(255 255 255 / 15%);
+    color: #fff;
+}
+.pagination-btn {
+    background-color: #fff !important;
+    color: #000 !important;
+}
+.pagination button.active {
+    background-color: #5c5c5c;
+}
+.pagination-number {
+    display: flex;
+    gap: 3px;
+}

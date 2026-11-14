@@ -7,12 +7,20 @@ const userDob = document.getElementById("user-date");
 const userProfile = document.getElementById("user-profile");
 const userList = document.getElementById("user-list");
 const userSearch = document.getElementById("user-search");
+const userAllDelete = document.getElementById("delete-all-btn");
+const paginationNumber = document.querySelector(".pagination-number");
+const prevBtn = document.querySelector(".prev-btn");
+const nextBtn = document.querySelector(".next-btn");
 
 let userSubmit = document.getElementById("submit-btn");
 let userUpdate = document.getElementById("update-btn");
 
 let userData = JSON.parse(localStorage.getItem("AlluserData")) || [];
 let profileUrl = "";
+
+// Pagination variables
+let currentPage = 1;
+let rowsPerPage = 3;
 
 
 // 1. Add Product Function (Form Submit Event)
@@ -59,10 +67,25 @@ userProfile.addEventListener("change", function(){
 // 2. Display User Function
 function userDataDisplay(displayData = userData ){
     userList.innerHTML = "";
+
+    // --- The slice() method is being applied here ---
+    let startIndex = (currentPage - 1) * rowsPerPage;
+    let endIndex = startIndex + rowsPerPage;
+
+    // This line will extract data only for the current page
+
+    let paginatedData = displayData.slice(startIndex, endIndex)
+
     if (displayData.length === 0) {
         userList.innerHTML = `<tr><td colspan="7" style="text-align: center;">No products added yet.</td></tr>`;
+        paginationNumber.innerHTML = "";
+        prevBtn.disabled = true; // Disable preview if no data is available
+        nextBtn.disabled = true;
+        return
     }
-    displayData.forEach((data, index) => {
+    paginatedData.forEach((data, index) => {
+        // For the correct serial numbers (e.g., if on page 2, then 4, 5, 6 should appear)
+        const actualIndex = startIndex + index + 1;
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${index+1}</td>
@@ -77,6 +100,7 @@ function userDataDisplay(displayData = userData ){
         userList.appendChild(tr);
     });
     deleteUser()
+    setupPaginationButtons(displayData);
 }
 // delete user function
 
@@ -183,6 +207,13 @@ userSearch.addEventListener("input", function(){
     searchResult();
 })
 
+// Delete all data function
+userAllDelete.addEventListener("click", function(){
+    userList.innerHTML = "";
+    localStorage.removeItem("AlluserData");
+    alert("All user data delete succesfully")
+})
+
 userDataDisplay();
 
 
@@ -192,3 +223,47 @@ function saveDataToLocal(){
     localStorage.setItem("AlluserData", JSON.stringify(userData));
 }
 
+// pagination  
+function setupPaginationButtons(data){
+    paginationNumber.innerHTML = "";
+    let totalPages = Math.ceil(data.length / rowsPerPage);
+
+    if(totalPages <= 1) {
+        paginationNumber.innerHTML="";
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        return // If there is little data, buttons are not needed.
+    } 
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.className = (i == currentPage) ? "num-btn active" : "num-btn";
+        
+        // When the user clicks on any page button
+        btn.addEventListener("click", function(){
+            currentPage = i;   // The current page will be updated
+            userDataDisplay(data);  // The display function will run again with the new page
+        })
+        paginationNumber.appendChild(btn);
+    }
+
+    // 2. Here, the disabled state of the 'Previous' and 'Next' buttons is managed.
+    prevBtn.disabled = (currentPage === 1);
+    nextBtn.disabled = (currentPage === totalPages);
+}
+// --- NEXT BUTTON EVENT ---
+nextBtn.addEventListener("click", function(){
+    let totalPage = Math.ceil(userData.length / rowsPerPage);
+    if (currentPage < totalPage) {
+        currentPage++;    // The page number will increase by one
+        userDataDisplay();  // The data for that page will be displayed
+    }
+})
+// --- PREV BUTTON EVENT ---
+prevBtn.addEventListener("click", function(){
+     if(currentPage > 1){
+        currentPage--;  // The page number will be one less
+        userDataDisplay(); // The data for that page will be displayed
+     }   
+})
