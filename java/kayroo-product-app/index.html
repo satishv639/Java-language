@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayroo Platform - Product Management</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-left">
+            <h1>Products</h1>
+            <div class="dropdown">
+                <span>All products <i class="fa-solid fa-chevron-down"></i></span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button id="openAddModalBtn" class="btn-primary">
+                <i class="fa-solid fa-plus"></i> Add product
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-header">
+                <h3><i class="fa-solid fa-filter"></i> Filter</h3>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="filter-group">
+                <div class="filter-title"><span>Category</span> <i class="fa-solid fa-chevron-up"></i></div>
+                <ul class="filter-list" id="categoryList">
+                    <li class="active" data-category="all"><span>All</span> <span class="count">248</span></li>
+                    <li data-category="smartphones"><span>Smartphones</span> <span class="count">78</span></li>
+                    <li data-category="laptops"><span>Laptops</span> <span class="count">96</span></li>
+                    <li data-category="fragrances"><span>Fragrances</span> <span class="count">34</span></li>
+                    <li data-category="skincare"><span>Skincare</span> <span class="count">40</span></li>
+                </ul>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="filter-group">
+                <div class="filter-title"><span>Price</span> <i class="fa-solid fa-chevron-up"></i></div>
+                <div class="price-slider-box">
+                    <input type="range" id="priceRange" min="0" max="1000" value="250">
+                    <div class="price-inputs">
+                        <input type="text" value="$0" readonly>
+                        <input type="text" id="maxPriceInput" value="$250" readonly>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            
+            <!-- Controls Bar -->
+            <div class="controls-bar">
+                <p id="productCountText">Showing products...</p>
+                <div class="controls-right">
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search products...">
+                    </div>
+                    <div class="sort-box">
+                        <span>Sort by: <strong>Newest</strong> <i class="fa-solid fa-chevron-down"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading products...
+            </div>
+
+            <!-- Error Message Box -->
+            <div id="errorBox" class="error-box" style="display: none;"></div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Product cards will be dynamically inserted here via JavaScript -->
+                <div class="product-card">
+                    <div class="product-img-box">
+                        <img class="product-img" src=""/>
+                    </div>
+                    <div class="product-info">
+                        <h4 id="product-title" class="product-title"></h4>
+                        <div class="product-price"></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div id="productModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close-btn">&times;</span>
+            <h2 id="modalTitle">Add New Product</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label>Product Title</label>
+                    <input type="text" id="titleInput" required placeholder="Enter product title">
+                </div>
+                <div class="form-group">
+                    <label>Price ($)</label>
+                    <input type="number" id="priceInput" required placeholder="Enter price">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="categoryInput" required placeholder="e.g. smartphones">
+                </div>
+                <div class="form-group">
+                    <label>Image URL</label>
+                    <input type="text" id="imageInput" required placeholder="Enter image URL">
+                </div>
+                <button type="submit" class="btn-primary full-width">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
