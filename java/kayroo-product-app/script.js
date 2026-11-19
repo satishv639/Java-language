@@ -10,6 +10,7 @@ const categoryList = document.getElementById("categoryList");
 
 let allProducts = [];
 
+
 // 1. GET: Fetch Products from API using Async/Await
 async function fetchProducts() {
 
@@ -59,9 +60,12 @@ function displayProducts(products){
                 <img src="${product.thumbnail}"/>
             </div>
             <div class="product-info">
+                <div class="product-brand">${product.brand}</div>
                 <h4 class="product-title">${product.title}</h4>
                 <div class="product-price">${product.price}</div>
+                
                 <div class="card-actions" style="margin-top: 10px;">
+                    <button class="btn-edit" onclick="openEditModal(${product.id})">Edit</button>
                     <button class="btn-delete" onclick="deleteProduct(${product.id})">Delete</button>
                 </div>
             </div>
@@ -96,7 +100,7 @@ searchInput.addEventListener("input", async function(e){
         displayProducts(data.products);
         
         // Update the count
-        productCountText.innerHTML = `Found ${data.products.length} Products`
+        productCountText.innerText = `Found ${data.products.length} Products`
 
     } catch (error) {
         errorBox.style.display = "block";
@@ -196,8 +200,104 @@ closeModalBtn.addEventListener("click", function(){
 
 // 2. POST: Adding a new product (upon form submission)
 
+// productForm.addEventListener("submit", async function(e){
+//     e.preventDefault();
+
+//     // Collecting data from form fields
+//     const productDataField = {
+//         title : titleInput.value,
+//         price : parseFloat(priceInput.value),
+//         category : categoryInput.value,
+//         thumbnail : imageInput.value
+//     };
+
+//     try {
+//         // DummyJSON add product endpoint: /products/add
+//         const response = await fetch('https://dummyjson.com/products/add', {
+//             method : 'POST',
+//             headers : {'Content-Type' : 'application/json'},
+//             body : JSON.stringify(productDataField)       
+//         });
+//         if (!response.ok) {
+//             throw new Error("Failed to add product.");
+//         }
+//         const addedProduct = await response.json();
+//         alert('Product added successfully! (DummyAPI simulated)');
+
+//         // Close the modal
+//         productModal.style.display = "none";
+
+//         // Since the dummy JSON isn't saved permanently, add the new product to the top of the local array and update the screen.
+//         allProducts.unshift(addedProduct);
+        
+//         // ⚠️ This line needs to be added so that old cards are removed and new cards can be rendered afresh:
+//         productsGrid.innerHTML = "";
+//         displayProducts(allProducts);
+
+//     } catch (error) {
+//         alert(error.message);
+//     }
+// });
+
+// 5. Delete: Deleting a product
+window.deleteProduct = async function(id){
+    // Get confirmation from the user
+    const isConfirmed = confirm("Are you sure you want to delete this product?");
+    if (!isConfirmed) {
+        return
+    }
+    try {
+        
+        // DummyJSON delete endpoint: /products/{id}
+        const response = await fetch(`https://dummyjson.com/products/${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) {
+            throw new Error("Failed to delete product.");
+            //console.warn("Server par product nahi mila, lekin local array se delete kar rahe hain.");
+        }
+        const data = await response.json();
+        alert(`Product deleted successfully! (Simulated ID: ${data.id})`);
+
+        // Filter out products from the local array whose IDs do not match
+        allProducts = allProducts.filter(function(productItem){
+            return productItem.id !== id;
+        })
+        // Updating the screen again
+        productsGrid.innerHTML = "";
+        displayProducts(allProducts);
+
+        productCountText.innerText = `Showing 1-${allProducts.length} products`;
+        updateCategoryCounts(allProducts);
+        // alert("Product deleted successfully!");
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+// 6A. Open Edit Modal with existing product data
+window.openEditModal = function(id){
+    // Finding a matching product from the products array
+    const productSelect = allProducts.find(function(item){
+        return item.id === id;
+    })
+    if (productSelect === undefined) {
+        return;
+    }
+    modalTitle.innerText = "Edit Product";
+    productModal.style.display = "flex";
+    productIdField.value = productSelect.id;
+    titleInput.value = productSelect.title;
+    priceInput.value = productSelect.price;
+    categoryInput.value = productSelect.category;
+    imageInput.value = productSelect.thumbnail;
+
+}
+// 2 & 6B. POST (Add) / PUT (Update) on Form Submission
 productForm.addEventListener("submit", async function(e){
     e.preventDefault();
+    const id = productIdField.value;
 
     // Collecting data from form fields
     const productDataField = {
@@ -208,68 +308,112 @@ productForm.addEventListener("submit", async function(e){
     };
 
     try {
-        // DummyJSON add product endpoint: /products/add
-        const response = await fetch('https://dummyjson.com/products/add', {
-            method : 'POST',
-            headers : {'Content-Type' : 'application/json'},
-            body : JSON.stringify(productDataField)       
-        });
-        if (!response.ok) {
-            throw new Error("Failed to add product.");
-        }
-        const addedProduct = await response.json();
-        alert('Product added successfully! (DummyAPI simulated)');
-
-        // Close the modal
-        productModal.style.display = "none";
-
-        // Since the dummy JSON isn't saved permanently, add the new product to the top of the local array and update the screen.
-        allProducts.unshift(addedProduct);
+        if(id){
+            // --- PUT: Update existing product ---
+            const response = await fetch(`https://dummyjson.com/products/${id}`, {
+                method : 'PUT',
+                headers : {'Content-Type':'application/json'},
+                body : JSON.stringify(productDataField)
+            });
+            if(!response.ok){
+                throw new Error("Server par product nahi mila, lekin local array mein update kar rahe hain.");
+            }
+            const updateData = await response.json();
         
-        // ⚠️ This line needs to be added so that old cards are removed and new cards can be rendered afresh:
+            // Updating the product in the local array
+            allProducts = allProducts.map(function(item){
+                if (item.id === Number(id)) {
+                    return {
+                        ...item,
+                        title : productDataField.title,
+                        price : productDataField.price,
+                        category : productDataField.category,
+                        thumbnail : productDataField.thumbnail,
+                        ...updateData
+                    }
+                }
+                return item
+            });
+            alert('Product updated successfully!');
+
+        } else {
+            // --- POST: Add new product ---
+            const response = await fetch(`https://dummyjson.com/products/add`, {
+                method : 'POST',
+                headers : {'Content-Type':'application/json'},
+                body : JSON.stringify(productDataField)
+            })
+            if(!response.ok){
+                throw new Error("Failed to add product.");
+            }
+            const addedProduct = await response.json();
+            allProducts.unshift(addedProduct);
+            alert('Product added successfully! (DummyAPI simulated)');
+        }
+        // Close the modal and update the screen + category counts
+        productModal.style.display = "none";
         productsGrid.innerHTML = "";
+
+         // This line needs to be added so that old cards are removed and new cards can be rendered afresh:
         displayProducts(allProducts);
-        console.log(allProducts);
+        updateCategoryCounts(allProducts);
+
 
     } catch (error) {
         alert(error.message);
-    }
-});
-
-// 5. Delete: Deleting a product
-window.deleteProduct = async function(id){
-    // Get confirmation from the user
-    const isConfirmed = confirm("Are you sure you want to delete this product?");
-    if (!isConfirmed) {
-        return
     }
     
-    try {
-        
-        // DummyJSON delete endpoint: /products/{id}
-        const response = await fetch(`https://dummyjson.com/products/${id}`, {
-            method: 'DELETE'
-        });
-        if (!response.ok) {
-            //throw new Error("Failed to delete product.");
-            console.warn("Server par product nahi mila, lekin local array se delete kar rahe hain.");
+})
+
+// --- 7. Price Filter: Filtering products using a price range slider ---
+
+const priceRange = document.getElementById("priceRange");
+const maxPriceInput = document.getElementById("maxPriceInput");
+
+// Updating the max price input and filtering products when the slider is moved
+
+priceRange.addEventListener("input", function(){
+    const maxPrice = Number(priceRange.value);
+   
+    // Display the current maximum price in the input box on the right side
+    maxPriceInput.value = `${maxPrice}`
+
+    // Filtering products from the products array that have a price equal to or less than a specified value
+    const filteredByPrice = allProducts.filter(function(item){
+        const productPrice = Number(item.price);
+        if (productPrice <= maxPrice) {
+            return true;
+        } else {
+            return false;
         }
-        const data = await response.json();
-        alert(`Product deleted successfully! (Simulated ID: ${data.id})`);
+    })
+    productsGrid.innerHTML = "";
+    displayProducts(filteredByPrice);
+    productCountText.innerText = `Showing ${filteredByPrice.length} products up to $${maxPrice}`;
+})
 
-        // Filter out products from the local array whose IDs do not match
-        allProducts = allProducts.filter(function(productItem){
-            return productItem.id !== id ;
+// --- 8. SORT BY: Products ko sort karna ---
+const sortSelect = document.getElementById("sortSelect");
+
+sortSelect.addEventListener("change", function(){
+    const sortValue = sortSelect.value;
+
+    // Create a copy [...allProducts] to avoid mutating the original allProducts array
+    let sortedProducts = [...allProducts];
+    if (sortValue === "price-asc") {
+        // From lower price to higher price
+        sortedProducts.sort(function(a, b){
+            const sortResultLower = Number(a.price) - Number(b.price);
+            return sortResultLower
+        });
+    } else if(sortValue === "price-desc"){
+        // From higher price to lower price
+        sortedProducts.sort(function(a, b){
+            const sortResultHigher = Number(b.price) - Number(a.price)
+            return sortResultHigher
         })
-        // Updating the screen again
-        productsGrid.innerHTML = "";
-        displayProducts(allProducts);
-
-        productCountText.innerText = `Showing 1-${allProducts.length} products`;
-        updateCategoryCounts(allProducts);
-        alert("Product deleted successfully!");
-
-    } catch (error) {
-        alert(error.message);
     }
-}
+    productsGrid.innerHTML = "";
+    displayProducts(sortedProducts);
+    productCountText.innerText = `Showing ${sortedProducts.length} products (${sortSelect.options[sortSelect.selectedIndex].text})`
+})

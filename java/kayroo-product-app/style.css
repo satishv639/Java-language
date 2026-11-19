@@ -191,7 +191,12 @@ body {
     border-radius: 6px;
     cursor: pointer;
 }
-
+.sort-box select {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
 /* Loading & Errors */
 .loading-indicator {
     text-align: center;
@@ -256,7 +261,10 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.product-brand {
+    font-size: 12px;
+    margin: 0 0 2px;
+}
 .product-price {
     font-size: 14px;
     font-weight: 700;

@@ -43,6 +43,7 @@
                     <li data-category="laptops"><span>Laptops</span> <span class="count">96</span></li>
                     <li data-category="fragrances"><span>Fragrances</span> <span class="count">34</span></li>
                     <li data-category="skincare"><span>Skincare</span> <span class="count">40</span></li>
+                    <li data-category="beauty"><span>Beauty</span> <span class="count">40</span></li>
                 </ul>
             </div>
 
@@ -70,8 +71,16 @@
                         <i class="fa-solid fa-search"></i>
                         <input type="text" id="searchInput" placeholder="Search products...">
                     </div>
-                    <div class="sort-box">
+                    <!--<div class="sort-box">
                         <span>Sort by: <strong>Newest</strong> <i class="fa-solid fa-chevron-down"></i></span>
+                    </div>-->
+                    <div class="sort-box">
+                        <label for="sortSelect">Sort by:</label>
+                        <select id="sortSelect">
+                            <option value="default">Newest</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -114,7 +123,7 @@
                 </div>
                 <div class="form-group">
                     <label>Price ($)</label>
-                    <input type="number" id="priceInput" required placeholder="Enter price">
+                    <input type="number" id="priceInput" step="0.01" required placeholder="Enter price">
                 </div>
                 <div class="form-group">
                     <label>Category</label>
