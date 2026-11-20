@@ -197,6 +197,22 @@ body {
     box-shadow: none !important;
     -webkit-box-shadow: none !important;
 }
+.product-dropdown {
+    font-size: 14px;
+    background: #fff;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.product-dropdown select {
+    border: none;
+    outline: none;
+    box-shadow: none !important;
+    text-transform: capitalize;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 /* Loading & Errors */
 .loading-indicator {
     text-align: center;

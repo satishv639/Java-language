@@ -417,3 +417,50 @@ sortSelect.addEventListener("change", function(){
     displayProducts(sortedProducts);
     productCountText.innerText = `Showing ${sortedProducts.length} products (${sortSelect.options[sortSelect.selectedIndex].text})`
 })
+
+// all category in dropdown
+
+const productCateList = document.getElementById("product-cate-list");
+async function categoryShow(){
+    const response = await fetch("https://dummyjson.com/products?limit=0");
+    if (!response.ok) {
+        throw new Error("Failed to connect api");
+    }
+    const data = await response.json();
+    allProducts = data.products
+    //console.log(allProducts);
+    const uniqueCategory = ["All Products", ...new Set(allProducts.map(function(itemcategory){
+        const result = itemcategory.category
+        return result
+    }))]
+    //console.log(uniqueCategory);
+    productCateList.innerHTML = "";
+    uniqueCategory.forEach(categoryName => {
+        const option = document.createElement("option");
+        option.value = categoryName;
+        option.textContent = categoryName;
+        productCateList.appendChild(option);
+    });
+}
+categoryShow();
+
+productCateList.addEventListener("change", function(e){
+    const selectedCate = e.target.value;
+    console.log("Selected cate", selectedCate)
+
+    if (selectedCate === "All Products") {
+        productsGrid.innerHTML = "";
+        displayProducts(allProducts);
+        productCountText.innerText = `Showing ${allProducts.length} products in all`;
+        return
+    }
+
+    const filterdCateProduct = allProducts.filter(function(itemCate){
+        const result = itemCate.category === selectedCate;
+        return result;
+    })
+     console.log(filterdCateProduct);
+    productsGrid.innerHTML = "";
+    displayProducts(filterdCateProduct);
+    productCountText.innerText = `Showing ${filterdCateProduct.length} products in ${selectedCate}`
+})
